@@ -53,7 +53,7 @@ namespace Company.Application.Controllers
 
         // PUT: api/ProductTypes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-       /* [HttpPut("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutProductType(int id, ProductType productType)
         {
             if (id != productType.Id)
@@ -80,11 +80,11 @@ namespace Company.Application.Controllers
             }
 
             return NoContent();
-        }*/
+        }
 
         // POST: api/ProductTypes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        /*[HttpPost]
+        [HttpPost]
         public async Task<ActionResult<ProductType>> PostProductType(ProductType productType)
         {
           if (_context.ProductTypes == null)
@@ -95,10 +95,10 @@ namespace Company.Application.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProductType", new { id = productType.Id }, productType);
-        }*/
+        }
 
         // DELETE: api/ProductTypes/5
-       /* [HttpDelete("{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductType(int id)
         {
             if (_context.ProductTypes == null)
@@ -115,7 +115,7 @@ namespace Company.Application.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }*/
+        }
 
         private bool ProductTypeExists(int id)
         {
