@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Company.Domain.Entities;
+using BasicWebAPI.Controllers;
 
 namespace Company.Application.Contexts {
-    public interface ICompanyContext {
+    public interface ICompanyContext : IDbContext {
 
         DbSet<Companies> Companies { get; set; }
         DbSet<Customer> Customers { get; set; }
@@ -10,6 +11,5 @@ namespace Company.Application.Contexts {
         DbSet<OrderLines> OrderLines { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<ProductType>  ProductTypes { get; set; }
-
     }
 }
