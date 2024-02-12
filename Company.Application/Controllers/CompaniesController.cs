@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Company.Application.Contexts;
 using Company.Domain.Entities;
@@ -14,9 +9,9 @@ namespace Company.Application.Controllers
     [ApiController]
     public class CompaniesController : ControllerBase
     {
-        private readonly CompanyContext _context;
+        private readonly ICompanyContext _context;
 
-        public CompaniesController(CompanyContext context)
+        public CompaniesController(ICompanyContext context)
         {
             _context = context;
         }

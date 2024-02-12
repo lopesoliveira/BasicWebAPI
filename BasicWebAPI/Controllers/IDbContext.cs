@@ -1,12 +1,5 @@
-Create a project in Application Settings Folder that will have
-Users
-Interface IDbContext
-etc
-
-/*
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Collections.Generic;
 
 namespace BasicWebAPI.Controllers {
     /// <summary>
@@ -20,4 +13,3 @@ namespace BasicWebAPI.Controllers {
         ChangeTracker ChangeTracker { get; }
     }
 }
-*/
