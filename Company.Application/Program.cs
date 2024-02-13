@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Company.Application.Contexts;
+using BasicWebAPI.Auth;
 
 namespace Company.Application {
     public class Program {
@@ -15,7 +16,8 @@ namespace Company.Application {
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerWithOAuth("Company.Application", "v1", true, true);
 
             var app = builder.Build();
 
@@ -27,8 +29,8 @@ namespace Company.Application {
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
