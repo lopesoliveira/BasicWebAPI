@@ -1,0 +1,23 @@
+Create a project in Application Settings Folder that will have
+Users
+Interface IDbContext
+etc
+
+/*
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Collections.Generic;
+
+namespace BasicWebAPI.Controllers {
+    /// <summary>
+    /// Interface to abstract hte use of DbContext of Entity Framework. Add
+    /// other methods as required
+    /// </summary>
+    public interface IDbContext : IDisposable {
+        DbSet<TEntity> Set<TEntity>() where TEntity : class;
+        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        ChangeTracker ChangeTracker { get; }
+    }
+}
+*/
