@@ -6,12 +6,6 @@ namespace Company.Company.Application.Contexts {
     public class CompanyContext : DbContext, ICompanyContext {
         public CompanyContext(DbContextOptions<CompanyContext> options) : base(options) {
         }
-        /*DbSet<Companies>? Companies { get; set; }
-        DbSet<Customer>? Customers { get; set; }
-        DbSet<Order>? Orders { get; set; }
-        DbSet<OrderLines>? OrderLines { get; set; }
-        DbSet<Product>? Products { get; set; }
-        DbSet<ProductType>? ProductTypes { get; set; }*/       
         public DbSet<Companies> Companies { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }

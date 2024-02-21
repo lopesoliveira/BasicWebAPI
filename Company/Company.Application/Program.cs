@@ -6,7 +6,7 @@ namespace Company.Company.Application {
         public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.      
+            // Add services to the container.
             builder.Services.AddControllers();
             //retirar o providerOption depois de criar a BD e tabelas
             builder.Services.AddDbContext<CompanyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CompanyContext")));
@@ -25,10 +25,7 @@ namespace Company.Company.Application {
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();
