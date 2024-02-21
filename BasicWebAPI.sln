@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Domain", "Company\Company.Domain\Company.Domain.csproj", "{6848E1EE-3359-4A8F-B94D-FF7E62394DC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppSettings", "AppSettings", "{2705870D-4416-481C-82E8-6A7A69B23ED6}"
-	ProjectSection(SolutionItems) = preProject
-		ToDo_File.txt = ToDo_File.txt
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Company.Application", "Company\Company.Application\Company.Application.csproj", "{87622F67-F37A-4D39-B66E-0E6FFCA6E2AA}"
 EndProject
