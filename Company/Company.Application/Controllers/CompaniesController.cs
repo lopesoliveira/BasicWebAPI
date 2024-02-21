@@ -18,7 +18,7 @@ namespace Company.Company.Application.Controllers
 
         // GET: api/Companies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Companies>>> GetCompanies()
+        public async Task<ActionResult<IEnumerable<Companies>>> GetCompaniesAsync()
         {
           if (_context.Companies == null)
           {
@@ -29,7 +29,7 @@ namespace Company.Company.Application.Controllers
 
         // GET: api/Companies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Companies>> GetCompanies(int id)
+        public async Task<ActionResult<Companies>> GetCompanyByIdAsync(int id)
         {
           if (_context.Companies == null)
           {
@@ -48,7 +48,7 @@ namespace Company.Company.Application.Controllers
         // PUT: api/Companies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompanies(int id, Companies companies)
+        public async Task<IActionResult> PutCompaniesAsync(int id, Companies companies)
         {
             if (id != companies.Id)
             {
@@ -79,7 +79,7 @@ namespace Company.Company.Application.Controllers
         // POST: api/Companies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Companies>> PostCompanies(Companies companies)
+        public async Task<ActionResult<Companies>> PostCompaniesAsync(Companies companies)
         {
           if (_context.Companies == null)
           {
@@ -88,12 +88,12 @@ namespace Company.Company.Application.Controllers
             _context.Companies.Add(companies);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCompanies", new { id = companies.Id }, companies);
+            return CreatedAtAction("GetCompanyByIdAsync", new { id = companies.Id }, companies);
         }
 
         // DELETE: api/Companies/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCompanies(int id)
+        public async Task<IActionResult> DeleteCompanyByIdAsync(int id)
         {
             if (_context.Companies == null)
             {
