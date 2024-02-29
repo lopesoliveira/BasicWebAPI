@@ -1,0 +1,40 @@
+RoadMap
+
+As for branch (feature/jwt_n_Bearer_from_Indian_website_4) that was created from  (feature/Finish_Refactor_Delete_Identity_To_Compile_3)
+
+1. Create Project: Using Visual Studio 2022	V
+	- API Project, .net 7.0, and a class library project for data connectivity and migration (AppSettings.BasicWebAPI.Domain)
+	- there were some files already created from  (feature/Finish_Refactor_Delete_Identity_To_Compile_3) that were modified in BasicWebAPI.Application
+		- Program.cs
+		- RegisterMyServices.cs
+		- Estão normalmente maradas com /*6 ....*/ as modificações
+		- Os ficheiros na pasta Identity penso não serem necessários
+	-Criadas as Entidades ApplicationUser, LoginModel, RegistrationModel, UserRole. Também o ApplicationDbContext.cs  e applicada a db-migration que criou todas as tabelas ASP....
+
+2. Install the Required Packages	V
+	dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+	dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+	dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+	dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+3. Database connection: appsettings.json	V
+
+4. Create Models and complete ApplicationDbContext class	V
+
+5. Update Program.cs: AddDbContext	V
+
+6. Database Migration	V
+	PM> add-migration CreateIdentity -context ApplicationDbContext
+	PM> update-database
+
+7. Create Auth Controller
+
+8. Create Auth Service
+
+9. Test API using PostMan
+
+10. Deploy to IIS
+
+11. Test API from IIS hosting
+
+

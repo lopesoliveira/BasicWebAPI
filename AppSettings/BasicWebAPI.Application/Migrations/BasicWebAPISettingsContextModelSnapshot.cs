@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BasicWebAPI.Application.Migrations
+namespace AppSettings.BasicWebAPI.Application.Migrations
 {
     [DbContext(typeof(BasicWebAPISettingsContext))]
     partial class BasicWebAPISettingsContextModelSnapshot : ModelSnapshot

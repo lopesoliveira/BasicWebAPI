@@ -11,7 +11,7 @@ PM> Update-Database
 
 #nullable disable
 
-namespace BasicWebAPI.Application.Migrations
+namespace AppSettings.BasicWebAPI.Application.Migrations
 {
     /// <inheritdoc />
     public partial class AddUsersTable : Migration

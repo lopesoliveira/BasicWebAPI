@@ -4,9 +4,13 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using AppSettings.BasicWebAPI.Application.Identity;
+using AppSettings.BasicWebAPI.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using AppSettings.BasicWebAPI.Application.Services;
+//6 using AppSettings.BasicWebAPI.Application.Identity;
 
-namespace AppSettings.BasicWebAPI.Application {
+namespace AppSettings.BasicWebAPI.Application
+{
     public class Program {
         public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +23,7 @@ namespace AppSettings.BasicWebAPI.Application {
             //In Postman Send Request (usually Post) and go to Headers and write in key: Authorization; Value: Bearer tokenString
             // YOUTUBE TUTORIAL ------ https://www.youtube.com/watch?v=mgeuh8k3I4g
 
+            /*6
             builder.Services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,18 +39,22 @@ namespace AppSettings.BasicWebAPI.Application {
                     ValidateIssuerSigningKey = true
                 };
             });
+            */
 
-            //See also: Identity/IdentityData.cs ---- Se controller how to give permission on delete
+            //See also: Identity/IdentityData.cs ---- See controller how to give permission on delete
+            /*6
             builder.Services.AddAuthorization(options => {
                 options.AddPolicy(IdentityData.AdminUserPolicyName , p =>
                     p.RequireClaim(IdentityData.AdminUserClaimName, "true"));
             });
+            */
 
             // Add services to the container.
             builder.Services.AddControllers();
 
             //retirar o providerOption depois de criar a BD e tabelas || Need to install NuGet Microsoft.EntityFrameworkCore.SqlServer to have the options.UseSqlServer method
             builder.Services.AddDbContext<BasicWebAPISettingsContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BasicWebAPISettingsContext")));
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContext")));
             builder.Services.AddMyDependencyGroup();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -77,6 +86,30 @@ namespace AppSettings.BasicWebAPI.Application {
                 });
             });
 
+            //For Identity
+            builder.Services.AddIdentity<ApplicationUser , IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            //Adding Authentication
+            builder.Services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            //Adding Jwt Bearer
+            .AddJwtBearer(options => {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters() {
+                    ValidateIssuer = true ,
+                    ValidateAudience = true ,
+                    ValidAudience = config["JWTKey:ValidAudience"] ,
+                    ValidIssuer = config["JWTKey:ValidIssuer"] ,
+                    ClockSkew = TimeSpan.Zero ,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWTKey:Secret"]!))
+                };
+            });
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
