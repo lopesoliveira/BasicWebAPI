@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicWebAPI.Application", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicWebAPI.Domain", "AppSettings\BasicWebAPI.Domain\BasicWebAPI.Domain.csproj", "{430A3E4E-4E8D-443E-A5C4-B3CAB2DCB539}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RoadMap", "RoadMap", "{D38643BC-EA02-4CA0-8AE8-846474E0170E}"
+	ProjectSection(SolutionItems) = preProject
+		RoadMap\BearerWorking.txt = RoadMap\BearerWorking.txt
+		RoadMap\RoadMap.txt = RoadMap\RoadMap.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

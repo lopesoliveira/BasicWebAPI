@@ -2,17 +2,24 @@
 using Microsoft.EntityFrameworkCore;
 using AppSettings.BasicWebAPI.Application.Contexts;
 using AppSettings.BasicWebAPI.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Azure.Core;
+using Azure;
+using Elfie.Serialization;
+using Humanizer;
+/*6
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 using AppSettings.BasicWebAPI.Application.Identity;
+*/
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace BasicWebAPI.Application.Controllers {
-    [Authorize]
-    [Route("api/[controller]")]    
+namespace AppSettings.BasicWebAPI.Application.Controllers {
+    [Authorize(Roles = "Admin")]
+    [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase {
 
@@ -22,16 +29,35 @@ namespace BasicWebAPI.Application.Controllers {
             _context = context;
         }
 
-        // GET: api/Companies
-        //[HttpGet(Name = "GetLoginsAsync"), Authorize]
-        [AllowAnonymous] //Replaces Authorize and allow request to display without Authentication/Authorization  [Authorize] is now at the top of the controller and not in each of the requests
+        #region HttpStatus
+        /*
+        https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+        401 Unauthorized
+                Although the HTTP standard specifies "unauthorized", semantically this response means "unauthenticated". That is, the client must authenticate itself to get the requested response.
+        403 Forbidden
+        The client does not have access rights to the content; that is, it is unauthorized, so the server is refusing to give the requested resource.Unlike 401 Unauthorized, the client's identity is known to the server.
+        */
+        #endregion
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Login>>> GetLoginsAsync() {
+        public async Task<ActionResult<IEnumerable<Login>>> GetLoginsAsync() {  // http: 401 - Unauthorized | http: 403 - Forbidden | http: 200 Ok
             if(_context.Login == null) {
                 return NotFound();
             }
             return await _context.Login.ToListAsync();
         }
+
+        [HttpGet]
+        [Route("GetLoginsAsync_NoNeedAuth")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Login>>> GetLoginsAsyncAllowAnonymous() {
+            if(_context.Login == null) {
+                return NotFound();
+            }
+            return await _context.Login.ToListAsync();
+        }
+
 
         // GET: api/Companies/5
         //[HttpGet(Name = "GetLoginByIdAsync/{id}"), Authorize]
@@ -94,7 +120,7 @@ namespace BasicWebAPI.Application.Controllers {
         [HttpDelete("{id}")]
         //[Authorize(Policy = IdentityData.AdminUserPolicyName)]  // Should respond not with 401 - Unauthorized; but with 403 - Forbidden
         [Authorize]
-        [RequiresClaim(IdentityData.AdminUserClaimName, "true")]
+        //6[RequiresClaim(IdentityData.AdminUserClaimName, "true")]
         //[HttpDelete("{id}")]   //There is also another level of authorization that is implemented with claims, for example everybody is allowed to get Logins but only admins can delete Logins
         public async Task<IActionResult> DeleteLoginByIdAsync(int id) {
             if(_context.Login == null) {
@@ -178,3 +204,13 @@ namespace BasicWebAPI.Application.Controllers {
     }
 }
 
+
+#region When Authentication is implemented but is not used error should be: 401 Unauthorized
+/*
+401 Unauthorized
+Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided. The response must include a WWW-Authenticate header field containing a 
+challenge applicable to the requested resource. See Basic access authentication and Digest access authentication. 401 semantically means "unauthorised", the user does not have valid authentication credentials 
+for the target resource.
+Some sites incorrectly issue HTTP 401 when an IP address is banned from the website (usually the website domain) and that specific address is refused permission to access a website 
+ */
+#endregion

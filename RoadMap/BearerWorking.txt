@@ -1,0 +1,55 @@
+
+From: https://ravindradevrani.medium.com/net-7-jwt-authentication-and-role-based-authorization-5e5e56979b67
+
+//User created without password. The registration service was wrong!!!	var createUserResult = await userManager.CreateAsync(user);
+//					                 It should be:	var createUserResult = await userManager.CreateAsync(user, model.Password!);
+{
+  "userName": "john",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john@gmail.com",
+  "password": "John@123"
+}
+// Create another User
+https://localhost:5001/api/Authentication/registration //201 - created
+{
+  "userName": "jane",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "jane@gmail.com",
+  "password": "Jane@123"
+}
+/*********************************************************************************************************************************************************************************************/
+//Login
+https://localhost:5001/api/Authentication/logins //200
+{
+  "userName": "jane",
+  "password": "Jane@123"
+}
+Response Body:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImphbmUiLCJqdGkiOiJjM2U4M2U3Mi0zMzIzLTRkMzEtYTRkZC1lNmRlMzU2N2IzM2EiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTcwOTIyMTAxMywiZXhwIjoxNzA5MjI0MDEzLCJpYXQiOjE3MDkyMjEwMTMsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.Bu-OUJ9lXgnYcqGiT48lO-ekcdYnXDxLnvXCSBcqY-M
+
+/*********************************************************************************************************************************************************************************************/
+https://localhost:5001/api/Login  com o Bearer token de cima tanto no PostMan como no swagger dá 403 - Forbiden
+Se alterar a API e substituir [Authorize(Roles = "Admin")] apenas por [Authorize] já dá
+
+
+//Create admin User
+// AuthenticationController.cs code changed from:   var (status, message) = await _authService.Registration(model , UserRole.User);
+                                              to:   var (status, message) = await _authService.Registration(model , UserRole.Admin);
+https://localhost:5001/api/Authentication/registration //201 - created
+{
+  "username": "admin",
+  "name": "Ravindra",
+  "email": "ravindra@gmail.com",
+  "password": "Admin@123"
+}
+//login
+https://localhost:5001/api/Authentication/logins
+{
+  "userName": "admin",
+  "password": "Admin@123"
+}
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluIiwianRpIjoiOWEzYzQ0NjgtMmFkMy00YjY2LThjYzEtYzg1MmE4MzhjNmY4Iiwicm9sZSI6IkFkbWluIiwibmJmIjoxNzA5MjIxOTczLCJleHAiOjE3MDkyMjQ5NzMsImlhdCI6MTcwOTIyMTk3MywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEifQ.A3l6fvz-43bk19UJw5KFbmVcv0cYzRg5HOmHigmbqvY
+
+https://localhost:5001/api/Login com o Bearer token de cima como foi criado como admin já consegue obter os resultados com a API com [Authorize(Roles = "Admin")]
